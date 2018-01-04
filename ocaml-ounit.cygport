@@ -1,19 +1,24 @@
 inherit ocaml
 
 NAME="ocaml-ounit"
-VERSION=1.0.2
+VERSION=2.0.6
 RELEASE=1
 CATEGORY="OCaml"
 SUMMARY="OCaml unit test framework"
 DESCRIPTION="OUnit is a unit test framework for OCaml. It allows one to easily
 create unit-tests for OCaml code. It is based on HUnit, a unit testing framework
 for Haskell. It is similar to JUnit, and other XUnit testing frameworks."
-HOMEPAGE="http://www.xs4all.nl/~mmzeeman/ocaml/"
-SRC_URI="http://www.xs4all.nl/~mmzeeman/ocaml/ounit-${VERSION}.tar.gz"
+HOMEPAGE="http://ounit.forge.ocamlcore.org/"
+SRC_URI="https://forge.ocamlcore.org/frs/download.php/1722/ounit-${VERSION}.tar.gz"
 SRC_DIR="ounit-${VERSION}"
 
 src_compile() {
 	lndirs
 	cd ${B}
-	cygmake all allopt
+	cygmake -j1 all doc CONFIGUREFLAGS="--enable-tests"
+}
+
+src_test() {
+	cd ${B}
+	make test
 }
